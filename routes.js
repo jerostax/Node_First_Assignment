@@ -2,6 +2,7 @@ const requestHandler = (req, res) => {
   const url = req.url;
   const method = req.method;
   if (url === '/') {
+    res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
     res.write('<head><title>Assignments</title></head>');
     res.write(
@@ -11,6 +12,7 @@ const requestHandler = (req, res) => {
     return res.end();
   }
   if (url === '/users') {
+    res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
     res.write('<head><title>Assignments Users</title></head>');
     res.write(
@@ -27,12 +29,12 @@ const requestHandler = (req, res) => {
     });
     return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString();
-      console.log(parsedBody);
+      console.log(parsedBody.split('=')[1]);
       res.statusCode = 302;
       res.setHeader('Location', '/');
       return res.end();
-    })
+    });
   }
-}
+};
 
-module.exports = requestHandler
+module.exports = requestHandler;
